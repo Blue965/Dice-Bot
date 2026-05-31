@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-dice"></i>
+                <span>Dice Bot</span>
+            </div>
+            <div class="nav-links">
+                <a href="/" class="nav-link">Accueil</a>
+                <a href="/commands" class="nav-link">Commandes</a>
+                <a href="/docs" class="nav-link">Documentation</a>
+                <a href="/dashboard" class="nav-link">Dashboard</a>
+                <a href="/logout" class="nav-link logout">Déconnexion</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="dashboard-container">
+        <aside class="sidebar">
+            <div class="user-profile">
+                <img src="<%= user.avatar %>" alt="Avatar" class="user-avatar">
+                <div class="user-info">
+                    <h3><%= user.username %></h3>
+                    <p><%= user.discriminator %></p>
+                </div>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="/dashboard" class="sidebar-link">
+                    <i class="fas fa-home"></i>
+                    <span>Accueil</span>
+                </a>
+                <a href="/servers" class="sidebar-link active">
+                    <i class="fas fa-server"></i>
+                    <span>Serveurs</span>
+                </a>
+                <a href="#" class="sidebar-link">
+                    <i class="fas fa-cog"></i>
+                    <span>Paramètres</span>
+                </a>
+            </nav>
+        </aside>
+
+        <main class="dashboard-content">
+            <div class="dashboard-header">
+                <h1>Serveurs</h1>
+                <p>Gérez tous vos serveurs</p>
+            </div>
+
+            <div class="guilds-list">
+                <% if (user.guilds && user.guilds.length > 0) { %>
+                    <% user.guilds.forEach(guild => { %>
+                        <div class="guild-list-item">
+                            <% if (guild.icon) { %>
+                                <img src="https://cdn.discordapp.com/icons/<%= guild.id %>/<%= guild.icon %>.png" alt="<%= guild.name %>" class="guild-icon">
+                            <% } else { %>
+                                <div class="guild-icon-placeholder"><%= guild.name.charAt(0) %></div>
+                            <% } %>
+                            <div class="guild-info">
+                                <h3><%= guild.name %></h3>
+                                <p><%= guild.owner ? 'Propriétaire' : 'Membre' %></p>
+                            </div>
+                            <div class="guild-actions">
+                                <% if (guild.permissions & 0x20) { %>
+                                    <a href="/server/<%= guild.id %>" class="btn btn-primary">Gérer</a>
+                                <% } else { %>
+                                    <span class="badge badge-warning">Pas de permissions</span>
+                                <% } %>
+                            </div>
+                        </div>
+                    <% }); %>
+                <% } else { %>
+                    <p class="no-data">Aucun serveur disponible</p>
+                <% } %>
+            </div>
+        </main>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 Dice Bot. Tous droits réservés.</p>
+        </div>
+    </footer>
+</body>
+</html>

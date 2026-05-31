@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-dice"></i>
+                <span>Dice Bot</span>
+            </div>
+            <div class="nav-links">
+                <a href="/" class="nav-link">Accueil</a>
+                <a href="/commands" class="nav-link">Commandes</a>
+                <a href="/docs" class="nav-link">Documentation</a>
+                <a href="/dashboard" class="nav-link">Dashboard</a>
+                <a href="/logout" class="nav-link logout">Déconnexion</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="dashboard-container">
+        <aside class="sidebar">
+            <div class="user-profile">
+                <img src="<%= user.avatar %>" alt="Avatar" class="user-avatar">
+                <div class="user-info">
+                    <h3><%= user.username %></h3>
+                    <p><%= user.discriminator %></p>
+                </div>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="/dashboard" class="sidebar-link">
+                    <i class="fas fa-home"></i>
+                    <span>Accueil</span>
+                </a>
+                <a href="/servers" class="sidebar-link">
+                    <i class="fas fa-server"></i>
+                    <span>Serveurs</span>
+                </a>
+                <a href="/server/<%= guild.guildId %>" class="sidebar-link active">
+                    <i class="fas fa-cog"></i>
+                    <span>Configuration</span>
+                </a>
+            </nav>
+        </aside>
+
+        <main class="dashboard-content">
+            <div class="dashboard-header">
+                <a href="/servers" class="back-link">
+                    <i class="fas fa-arrow-left"></i>
+                    Retour aux serveurs
+                </a>
+                <h1><%= guild.guildName %></h1>
+                <p>Configuration du serveur</p>
+            </div>
+
+            <div class="server-config">
+                <div class="config-section">
+                    <h2><i class="fas fa-cog"></i> Général</h2>
+                    <div class="config-item">
+                        <label>Préfixe</label>
+                        <input type="text" value="<%= guild.prefix %>" class="form-input">
+                    </div>
+                    <div class="config-item">
+                        <label>Langue</label>
+                        <select class="form-select">
+                            <option value="fr" <%= guild.language === 'fr' ? 'selected' : '' %>>Français</option>
+                            <option value="en" <%= guild.language === 'en' ? 'selected' : '' %>>English</option>
+                            <option value="es" <%= guild.language === 'es' ? 'selected' : '' %>>Español</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="config-section">
+                    <h2><i class="fas fa-gavel"></i> Modération</h2>
+                    <div class="config-item">
+                        <label>Activer la modération</label>
+                        <input type="checkbox" <%= guild.moderation.enabled ? 'checked' : '' %> class="form-checkbox">
+                    </div>
+                    <div class="config-item">
+                        <label>Logs de modération</label>
+                        <input type="checkbox" <%= guild.moderation.logs ? 'checked' : '' %> class="form-checkbox">
+                    </div>
+                    <div class="config-item">
+                        <label>Auto-modération</label>
+                        <input type="checkbox" <%= guild.moderation.autoMod ? 'checked' : '' %> class="form-checkbox">
+                    </div>
+                </div>
+
+                <div class="config-section">
+                    <h2><i class="fas fa-coins"></i> Économie</h2>
+                    <div class="config-item">
+                        <label>Activer l'économie</label>
+                        <input type="checkbox" <%= guild.economy.enabled ? 'checked' : '' %> class="form-checkbox">
+                    </div>
+                    <div class="config-item">
+                        <label>Devise</label>
+                        <input type="text" value="<%= guild.economy.currency %>" class="form-input">
+                    </div>
+                    <div class="config-item">
+                        <label>Solde de départ</label>
+                        <input type="number" value="<%= guild.economy.startingBalance %>" class="form-input">
+                    </div>
+                </div>
+
+                <div class="config-section">
+                    <h2><i class="fas fa-ticket-alt"></i> Tickets</h2>
+                    <div class="config-item">
+                        <label>Activer les tickets</label>
+                        <input type="checkbox" <%= guild.tickets.enabled ? 'checked' : '' %> class="form-checkbox">
+                    </div>
+                </div>
+
+                <div class="config-section">
+                    <h2><i class="fas fa-chart-line"></i> Niveaux</h2>
+                    <div class="config-item">
+                        <label>Activer les niveaux</label>
+                        <input type="checkbox" <%= guild.levels.enabled ? 'checked' : '' %> class="form-checkbox">
+                    </div>
+                    <div class="config-item">
+                        <label>Multiplicateur XP</label>
+                        <input type="number" value="<%= guild.levels.xpMultiplier %>" class="form-input" step="0.1">
+                    </div>
+                </div>
+
+                <div class="config-section">
+                    <h2><i class="fas fa-shield-alt"></i> Sécurité</h2>
+                    <div class="config-item">
+                        <label>Anti-raid</label>
+                        <input type="checkbox" <%= guild.security.antiRaid ? 'checked' : '' %> class="form-checkbox">
+                    </div>
+                    <div class="config-item">
+                        <label>Anti-nuke</label>
+                        <input type="checkbox" <%= guild.security.antiNuke ? 'checked' : '' %> class="form-checkbox">
+                    </div>
+                    <div class="config-item">
+                        <label>Vérification</label>
+                        <input type="checkbox" <%= guild.security.verification ? 'checked' : '' %> class="form-checkbox">
+                    </div>
+                </div>
+
+                <div class="config-actions">
+                    <button class="btn btn-primary">Sauvegarder</button>
+                    <button class="btn btn-secondary">Réinitialiser</button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 Dice Bot. Tous droits réservés.</p>
+        </div>
+    </footer>
+</body>
+</html>

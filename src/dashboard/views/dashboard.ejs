@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-dice"></i>
+                <span>Dice Bot</span>
+            </div>
+            <div class="nav-links">
+                <a href="/" class="nav-link">Accueil</a>
+                <a href="/commands" class="nav-link">Commandes</a>
+                <a href="/docs" class="nav-link">Documentation</a>
+                <a href="/dashboard" class="nav-link active">Dashboard</a>
+                <a href="/logout" class="nav-link logout">Déconnexion</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="dashboard-container">
+        <aside class="sidebar">
+            <div class="user-profile">
+                <img src="<%= user.avatar %>" alt="Avatar" class="user-avatar">
+                <div class="user-info">
+                    <h3><%= user.username %></h3>
+                    <p><%= user.discriminator %></p>
+                </div>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="/dashboard" class="sidebar-link active">
+                    <i class="fas fa-home"></i>
+                    <span>Accueil</span>
+                </a>
+                <a href="/servers" class="sidebar-link">
+                    <i class="fas fa-server"></i>
+                    <span>Serveurs</span>
+                </a>
+                <a href="https://discord.com/oauth2/authorize?client_id=<%= process.env.DISCORD_CLIENT_ID %>&permissions=8&scope=bot%20applications.commands" target="_blank" class="sidebar-link invite-link">
+                    <i class="fas fa-plus-circle"></i>
+                    <span>Ajouter le bot</span>
+                </a>
+                <a href="#" class="sidebar-link">
+                    <i class="fas fa-cog"></i>
+                    <span>Paramètres</span>
+                </a>
+                <a href="#" class="sidebar-link">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Statistiques</span>
+                </a>
+                <a href="#" class="sidebar-link">
+                    <i class="fas fa-ticket-alt"></i>
+                    <span>Tickets</span>
+                </a>
+            </nav>
+        </aside>
+
+        <main class="dashboard-content">
+            <div class="dashboard-header">
+                <h1>Dashboard</h1>
+                <p>Bienvenue, <%= user.username %> !</p>
+            </div>
+
+            <div class="dashboard-stats">
+                <div class="stat-card">
+                    <i class="fas fa-server"></i>
+                    <h3><%= user.guilds ? user.guilds.length : 0 %></h3>
+                    <p>Serveurs</p>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-crown"></i>
+                    <h3><%= user.guilds ? user.guilds.filter(g => g.owner).length : 0 %></h3>
+                    <p>Propriétaire</p>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-shield-alt"></i>
+                    <h3><%= user.guilds ? user.guilds.filter(g => g.permissions & 0x20).length : 0 %></h3>
+                    <p>Admin</p>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-robot"></i>
+                    <h3><%= user.guilds ? user.guilds.filter(g => g.bot).length : 0 %></h3>
+                    <p>Bots</p>
+                </div>
+            </div>
+
+            <div class="dashboard-section">
+                <h2><i class="fas fa-server"></i> Vos serveurs</h2>
+                <div class="guilds-grid">
+                    <% if (user.guilds && user.guilds.length > 0) { %>
+                        <% user.guilds.slice(0, 6).forEach(guild => { %>
+                            <div class="guild-card">
+                                <% if (guild.icon) { %>
+                                    <img src="https://cdn.discordapp.com/icons/<%= guild.id %>/<%= guild.icon %>.png" alt="<%= guild.name %>">
+                                <% } else { %>
+                                    <div class="guild-placeholder"><%= guild.name.charAt(0) %></div>
+                                <% } %>
+                                <h4><%= guild.name %></h4>
+                                <p><%= guild.owner ? 'Propriétaire' : 'Membre' %></p>
+                                <a href="/server/<%= guild.id %>" class="btn btn-small">Gérer</a>
+                            </div>
+                        <% }); %>
+                        <% if (user.guilds.length > 6) { %>
+                            <a href="/servers" class="guild-card view-all">
+                                <div class="view-all-content">
+                                    <i class="fas fa-arrow-right"></i>
+                                    <p>Voir tous les serveurs</p>
+                                </div>
+                            </a>
+                        <% } %>
+                    <% } else { %>
+                        <p class="no-data">Aucun serveur disponible</p>
+                    <% } %>
+                </div>
+            </div>
+
+            <div class="dashboard-section">
+                <h2><i class="fas fa-bolt"></i> Actions rapides</h2>
+                <div class="quick-actions">
+                    <a href="/servers" class="action-card">
+                        <i class="fas fa-plus-circle"></i>
+                        <span>Ajouter le bot</span>
+                    </a>
+                    <a href="/docs" class="action-card">
+                        <i class="fas fa-book"></i>
+                        <span>Documentation</span>
+                    </a>
+                    <a href="/commands" class="action-card">
+                        <i class="fas fa-terminal"></i>
+                        <span>Commandes</span>
+                    </a>
+                    <a href="#" class="action-card">
+                        <i class="fas fa-headset"></i>
+                        <span>Support</span>
+                    </a>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 Dice Bot. Tous droits réservés.</p>
+        </div>
+    </footer>
+</body>
+</html>

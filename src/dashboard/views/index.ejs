@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-dice"></i>
+                <span>Dice Bot</span>
+            </div>
+            <div class="nav-links">
+                <a href="/" class="nav-link active">Accueil</a>
+                <a href="/commands" class="nav-link">Commandes</a>
+                <a href="/docs" class="nav-link">Documentation</a>
+                <% if (user) { %>
+                    <a href="/dashboard" class="nav-link">Dashboard</a>
+                    <a href="/logout" class="nav-link logout">Déconnexion</a>
+                <% } else { %>
+                    <a href="/login" class="nav-link login">Connexion</a>
+                <% } %>
+            </div>
+        </div>
+    </nav>
+
+    <main class="hero">
+        <div class="hero-content">
+            <h1>🎲 Dice Bot</h1>
+            <p class="hero-subtitle">Le bot Discord ultime avec modération, économie, fun et bien plus encore !</p>
+            <div class="hero-buttons">
+                <a href="https://discord.com/oauth2/authorize?client_id=<%= process.env.DISCORD_CLIENT_ID %>&permissions=8&scope=bot%20applications.commands" target="_blank" class="btn btn-primary">
+                    <i class="fab fa-discord"></i> Ajouter le bot
+                </a>
+                <% if (user) { %>
+                    <a href="/dashboard" class="btn btn-secondary">Dashboard</a>
+                <% } else { %>
+                    <a href="/login" class="btn btn-secondary">Connexion</a>
+                <% } %>
+                <a href="/commands" class="btn btn-secondary">Commandes</a>
+            </div>
+        </div>
+        <div class="hero-stats">
+            <div class="stat-card">
+                <i class="fas fa-server"></i>
+                <h3>500+</h3>
+                <p>Serveurs</p>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-users"></i>
+                <h3>100K+</h3>
+                <p>Utilisateurs</p>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-terminal"></i>
+                <h3>200+</h3>
+                <p>Commandes</p>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-shield-alt"></i>
+                <h3>99.9%</h3>
+                <p>Uptime</p>
+            </div>
+        </div>
+    </main>
+
+    <section class="features">
+        <div class="container">
+            <h2 class="section-title">Fonctionnalités</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <i class="fas fa-gavel"></i>
+                    <h3>Modération</h3>
+                    <p>Outils complets de modération avec logs, auto-mod et protection anti-raid.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-coins"></i>
+                    <h3>Économie</h3>
+                    <p>Système d'économie complet avec banque, shop, giveaways et jeux.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-gamepad"></i>
+                    <h3>Fun</h3>
+                    <p>Commandes divertissantes : dés, mèmes, blagues, jeux et plus encore.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-ticket-alt"></i>
+                    <h3>Tickets</h3>
+                    <p>Système de tickets avancé avec transcription et gestion.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-shield-alt"></i>
+                    <h3>Sécurité</h3>
+                    <p>Protection anti-raid, anti-nuke et audit de sécurité complet.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-cog"></i>
+                    <h3>Configuration</h3>
+                    <p>Dashboard intuitif pour configurer facilement votre bot.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="invite-section">
+        <div class="container">
+            <div class="invite-content">
+                <div class="invite-text">
+                    <h2>🚀 Ajoutez Dice Bot à votre serveur</h2>
+                    <p>Rejoignez des milliers de serveurs qui utilisent déjà Dice Bot pour améliorer leur communauté Discord.</p>
+                    <ul class="invite-features">
+                        <li><i class="fas fa-check"></i> Modération avancée</li>
+                        <li><i class="fas fa-check"></i> Système d'économie complet</li>
+                        <li><i class="fas fa-check"></i> Commandes fun et divertissantes</li>
+                        <li><i class="fas fa-check"></i> Dashboard web intuitif</li>
+                        <li><i class="fas fa-check"></i> Support 24/7</li>
+                    </ul>
+                </div>
+                <div class="invite-card">
+                    <div class="invite-card-header">
+                        <i class="fab fa-discord"></i>
+                        <h3>Invitation</h3>
+                    </div>
+                    <div class="invite-card-body">
+                        <p>Cliquez sur le bouton ci-dessous pour ajouter Dice Bot à votre serveur Discord.</p>
+                        <a href="https://discord.com/oauth2/authorize?client_id=<%= process.env.DISCORD_CLIENT_ID %>&permissions=8&scope=bot%20applications.commands" target="_blank" class="btn btn-discord-large">
+                            <i class="fab fa-discord"></i>
+                            Ajouter au serveur
+                        </a>
+                        <p class="invite-note">Permissions administrateur requises pour une configuration optimale</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 Dice Bot. Tous droits réservés.</p>
+            <div class="footer-links">
+                <a href="/docs">Documentation</a>
+                <a href="/commands">Commandes</a>
+                <a href="#">Support</a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
